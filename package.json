@@ -15,5 +15,13 @@
   "bugs": {
     "url": "https://github.com/marchuanv/combustion/issues"
   },
-  "homepage": "https://github.com/marchuanv/combustion#readme"
+  "homepage": "https://github.com/marchuanv/combustion#readme",
+  "bootstrap": {
+    "mode": "designer",
+    "host": "localhost",
+    "port": 3000
+  },
+  "dependencies": {
+    "open": "^8.4.0"
+  }
 }
