@@ -1,0 +1,19 @@
+{
+  "name": "combustion",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marchuanv/combustion.git"
+  },
+  "author": "Marchuan Van Der Merwe",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marchuanv/combustion/issues"
+  },
+  "homepage": "https://github.com/marchuanv/combustion#readme"
+}
