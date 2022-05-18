@@ -1,0 +1,13 @@
+<html>
+    <head>
+        <script>
+            const token = sessionStorage.getItem("token");
+            fetch("/designer", { headers: { token }}).catch(error => {
+                console.log(error);
+            });
+        </script>
+    </head>
+    <body>
+        DESIGNER
+    </body>
+</html>

@@ -1,29 +1,34 @@
 <html>
-    <head>
-        <script>
-            function login(usernameElement, passwordElement) {
-                fetch(location.href).then(response => {
-                  
-                  const newSessionId = response.headers.get("SessionId");
-                  const username = usernameElement.value;
-                  const password = passwordElement.value;
-
-                  
-
-                  console.log("Session Id: ", newSessionId);
-                  console.log("Username: ", username);
-                  console.log("Password: ", password);
-                }).catch(error => {
-                    console.log(error);
-                });
-            }
-        </script>
-    </head>
+    <head></head>
     <body>
-        <label>Username:</label>
-        <input type="input" id="username" />
-        <label>Password:</label>
-        <input type="input" id="password" />
-        <button onclick="login(username, password)">Submit</button>
+        <form id="form" action="/authenticate" method="POST">
+            <label>Username:</label>
+            <input type="input" id="username" />
+            <label>Password:</label>
+            <input type="input" id="password" />
+            <button>Submit</button>
+        </form>
+        <script>
+            function authenticate() {
+                const usernameElement = document.getElementById("username");
+                const passwordElement = document.getElementById("password");
+                const username = usernameElement.value;
+                const secret = passwordElement.value;
+                if (username && secret) {
+                    sessionStorage.clear();
+                    fetch("/authenticate", { headers: { username, secret } }).then(response => {
+                        const token = response.headers.get("token");
+                        if (token) {
+                            sessionStorage.setItem("token",token);
+                        }
+                    }).catch(error => {
+                        console.log(error);
+                    });
+                }
+            }
+            const formElement = document.getElementById('form');
+            formElement.removeEventListener('submit', authenticate);
+            formElement.addEventListener('submit', authenticate);
+        </script>
     </body>
 </html>
