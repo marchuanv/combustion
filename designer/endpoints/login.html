@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <script>
+            function login(usernameElement, passwordElement) {
+                fetch(location.href).then(response => {
+                  
+                  const newSessionId = response.headers.get("SessionId");
+                  const username = usernameElement.value;
+                  const password = passwordElement.value;
+
+                  
+
+                  console.log("Session Id: ", newSessionId);
+                  console.log("Username: ", username);
+                  console.log("Password: ", password);
+                }).catch(error => {
+                    console.log(error);
+                });
+            }
+        </script>
+    </head>
+    <body>
+        <label>Username:</label>
+        <input type="input" id="username" />
+        <label>Password:</label>
+        <input type="input" id="password" />
+        <button onclick="login(username, password)">Submit</button>
+    </body>
+</html>

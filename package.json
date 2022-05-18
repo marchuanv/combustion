@@ -10,6 +10,10 @@
     "type": "git",
     "url": "git+https://github.com/marchuanv/combustion.git"
   },
+  "engines": {
+    "npm": ">=7.10.0",
+    "node": ">=16.0.0"
+  },
   "author": "Marchuan Van Der Merwe",
   "license": "ISC",
   "bugs": {
@@ -18,10 +22,11 @@
   "homepage": "https://github.com/marchuanv/combustion#readme",
   "bootstrap": {
     "mode": "designer",
-    "host": "localhost",
-    "port": 3000
+    "hostname": "localhost",
+    "hostport": 3000
   },
   "dependencies": {
-    "open": "^8.4.0"
+    "open": "^8.4.0",
+    "utils": "marchuanv/utils"
   }
 }
