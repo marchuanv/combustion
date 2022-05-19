@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.js"></script>
+    </head>
+    <body>
+        <script>
+            const token = sessionStorage.getItem("token");
+            const username = sessionStorage.getItem("username");
+            const secret = sessionStorage.getItem("secret");
+            fetch("/redirect", { method: "POST", headers: { token: token, username: username, secret: secret } })
+                    .then(function(response) {
+                        return response.text().then( function(body) {
+                            const { token } = JSON.parse(`{ "token": "${response.headers.get("token")}" }` ) || { token: null };
+                            sessionStorage.setItem("token", token);
+                            let jsonObj = "";
+                            try {
+                                jsonObj = JSON.parse(body);
+                            } catch {
+                                jsonObj = { redirectUrl: null };
+                            }
+                            const { redirectUrl } = jsonObj;
+                            if (redirectUrl) {
+                                location.href = redirectUrl;
+                            }
+                        });
+                    });
+        </script>
+    </body>
+</html>

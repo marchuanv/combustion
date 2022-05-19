@@ -2,19 +2,25 @@ setTimeout(() => {
     try {
         const path = require("path");
         const fs = require("fs");
-        const { token } = module.exports.request.headers;
+        const { precheck, token } = module.exports.request.headers;
         const designerHTMLPath = path.resolve(`${__dirname}/designer.html`);
        
         if (token) {
-            module.exports.response.headers.token = token;
             module.exports.response.statusCode = 200;
             module.exports.response.statusMessage = "success";
             module.exports.response.data = fs.readFileSync(designerHTMLPath,"UTF-8");
             module.exports.isProcessing = false;
         } else {
+            // module.exports.response.headers.location = "/login";
+            // module.exports.response.headers["no-cache"] = "private";
+            // module.exports.response.statusCode = 303;
+            // module.exports.response.statusMessage = "Unauthorised Redirect";
+            // module.exports.response.data = "Unauthorised Redirect";
+            // module.exports.isProcessing = false;
+
             module.exports.response.statusCode = 200;
-            module.exports.response.statusMessage = "Unauthorised";
-            module.exports.response.data = "Unauthorised";
+            module.exports.response.statusMessage = "success";
+            module.exports.response.data = fs.readFileSync(designerHTMLPath,"UTF-8");
             module.exports.isProcessing = false;
         }
 

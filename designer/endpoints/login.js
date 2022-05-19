@@ -1,30 +1,3 @@
-setTimeout(() => {
-    try {
-        const path = require("path");
-        const fs = require("fs");
-        const { token } = module.exports.request.headers;
-        const loginHTMLPath = path.resolve(`${__dirname}/login.html`);
-       
-        if (token) {
-            module.exports.response.headers.token = token;
-            module.exports.response.headers.location = "/designer";
-            module.exports.response.statusCode = 303;
-            module.exports.response.statusMessage = "Authorised Redirect";
-            module.exports.response.data = "";
-            module.exports.isProcessing = false;
-        } else {
-            module.exports.response.statusCode = 200;
-            module.exports.response.statusMessage = "success";
-            module.exports.response.data = fs.readFileSync(loginHTMLPath,"UTF-8");
-            module.exports.isProcessing = false;
-        }
-    } catch (err) {
-        module.exports.response.data = "";
-        module.exports.response.statusCode = 500;
-        module.exports.response.statusMessage = "Internal Server Error";
-        module.exports.isProcessing = false;
-    }
-},1000);
 module.exports = {
     response: {
         statusCode: null,
@@ -36,5 +9,33 @@ module.exports = {
         url: null,
         headers: {}
     },
-    isProcessing: true
+    handle: async (headers, body, method) => {
+        try {
+            const path = require("path");
+            const fs = require("fs");
+            const utils = require("utils");
+            if (method === "GET") {
+                const loginHTMLPath = path.resolve(`${__dirname}/content/login.html`);
+                module.exports.response.headers["Content-Type"] = "text/html";
+                module.exports.response.statusCode = 200;
+                module.exports.response.statusMessage = "success";
+                module.exports.response.data = fs.readFileSync(loginHTMLPath,"UTF-8");
+            }
+            if (method === "POST") {
+                const { username, secret } = headers;
+                if (username && secret) {
+                    module.exports.response.headers["Content-Type"] = "application/json";
+                    module.exports.response.headers.token = utils.generateGUID();
+                    module.exports.response.statusCode = 200;
+                    module.exports.response.statusMessage = "success";
+                    module.exports.response.data = "";
+                }
+            }
+        } catch (err) {
+            module.exports.response.data = "";
+            module.exports.response.statusCode = 500;
+            module.exports.response.statusMessage = "Internal Server Error";
+            module.exports.isProcessing = false;
+        }
+    }
 };
