@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+            function register(username, secret) {
+                if (username && secret) {
+                    if (username.value && secret.value) {
+                        fetch(location.href, { method: "POST", redirect: 'follow', headers: {username:username.value,secret:secret.value}, body:JSON.stringify({ redirectUrl: "/login" } )})
+                            .catch(function(err) {console.log(err);});
+                    }
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <input type="input" id="username" placeholder="enter username here..."/>
+        <input type="input" id="secret" placeholder="enter password here..."/>
+        <input type="button" id="submit" value="Register" onclick="register(username, secret);"/>
+        <a href="/login">Login</a>
+    </body>
+</html>
