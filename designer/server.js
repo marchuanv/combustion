@@ -8,21 +8,20 @@ module.exports = {
         const listener = http.createServer((req, res) => {
             req.setEncoding('utf8');
             const requestUrlSegments = req.url.split("/");
-            const path = requestUrlSegments[1] || "login";
-            const generatePath = path.resolve(path.join(__dirname, "endpoints", req.method, 'generate.js'));
-            console.log(`${req.method} -> ${handlerPath}`);
+            const urlPath = requestUrlSegments[1] || "/login";
+            const handlerPath = path.join(__dirname, "http", `${req.method}.js`);
             let body = "";
             req.on('data', (chunk) => {
                 body += chunk;
             });
             req.on('end', async () => {
-                const handler = require(generatePath);
+                const handler = require(handlerPath);
                 await handler.handle({ 
                     headers: req.headers,
                     body,
-                    path
+                    urlPath
                 });
-                const { statusCode, statusMessage, data, headers } = handler.response;
+                const { statusCode, statusMessage, data, headers } = generator.response;
                 res.writeHead(statusCode, statusMessage, headers);
                 res.end(data);
             });

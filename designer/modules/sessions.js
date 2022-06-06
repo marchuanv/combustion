@@ -1,6 +1,6 @@
 const sessions = [];
 module.exports = {
-    register: (username, token) => {
+    register: ({ username, token }) => {
         sessions.push({ username, token });
     },
     find: ({ token, username }) => {
